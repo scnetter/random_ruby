@@ -18,9 +18,17 @@ user_id = gets.chomp
 
 if user_id == USER
   print "Enter Password: "
-  password = gets
-  exit
+  password = gets.chomp
 else
   puts "Invalid or Unknown User."
   exit
+end
+
+unless password != PASSWORD
+  puts "Welcome, ${user_id}."
+  puts "Choose an option:"
+  puts "1. Add new service credentials."
+  puts "2. Retrieved existing credentials."
+  selection = gets.chomp
+  puts "Select was #{selection}"
 end
