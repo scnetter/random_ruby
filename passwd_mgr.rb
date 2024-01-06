@@ -15,4 +15,12 @@ puts "Generic - Totally Seucure (sic!) - Passowrd Manager"
 puts "Please sign-in to continue."
 print "Enter UserId (email or ID):"
 user_id = gets.chomp
-p user_id
+
+if user_id == USER
+  print "Enter Password: "
+  password = gets
+  exit
+else
+  puts "Invalid or Unknown User."
+  exit
+end
