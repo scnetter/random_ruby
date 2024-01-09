@@ -117,7 +117,7 @@ user_email = prompt_user_for_email
 verify_user_email(user_email)
 user_password = prompt_user_for_password
 verify_user_password(user_password)
-while(true)
+loop do
   menu_options
   user_selection = get_user_menu_selection
   handle_user_menu_selection(user_selection)
