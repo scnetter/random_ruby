@@ -8,7 +8,7 @@ PASSWORD = "SUPERSECURE" # not!
 PASSWORD_VAULT = {azure: {username: 'kelly', password: 'mwah'}}
 =begin
 I cannot truly express how grating it is to me that this was the first learning project.
-As someone who has worked with and is involved in CyberSec... I feel triggered.
+As someone who has worked with and is involved in CyberSec... I feel triggered. :)
 =end
 
 
@@ -22,7 +22,7 @@ def prompt_user_for_email
   gets.chomp
 end
 
-def verify_user_email
+def verify_user_email(user_id)
   if user_id != USER
     puts "Invalid or Unknown User."
     exit
@@ -57,7 +57,7 @@ def get_user_menu_selection
 end
 
 def handle_user_menu_selection(user_selection)
-  case selection
+  case user_selection
   when "1"
     new_service = set_new_service_name
     set_username_for(new_service)
@@ -65,12 +65,11 @@ def handle_user_menu_selection(user_selection)
   when "2"
     print "What is the service name you wish to retrieve? "
     selected_service = get_service_name
-    credentials = get_service_credentials
-    display_service_credentials(credentials, selected_service)
+    credentials = get_service_credentials(selected_service)
+    display_service_credentials(selected_service, credentials)
 
   else
-    puts "Exiting the program."
-    exit
+    exit_program
   end
 end
 
@@ -81,15 +80,15 @@ def set_new_service_name
   new_service
 end
 
-def set_username_for(service)
+def set_username_for(new_service)
   print "Enter the username for the #{new_service} service:"
   new_service_username = gets.chomp
-  PASSWORD_VAULT[service.to_sym][:username] = new_service_username
+  PASSWORD_VAULT[new_service.to_sym][:username] = new_service_username
 end
 
-def set_password_for_service(service)
+def set_password_for_service(new_service)
   print "Enter the password for the #{new_service} service:"
-  PASSWORD_VAULT[service.to_sym][:password] = gets.chomp
+  PASSWORD_VAULT[new_service.to_sym][:password] = gets.chomp
 end
 
 def get_service_name
@@ -101,9 +100,25 @@ def get_service_credentials(service_name)
   PASSWORD_VAULT[service_name.to_sym]
 end
 
-def display_service_credentials(credentials, service_name)
-  puts "Here are the credentials for #{selected_service}:"
+def display_service_credentials(service_name, credentials)
+  puts "Here are the credentials for #{service_name}:"
     credentials.each do |k, v|
       puts "#{k}: #{v}"
     end
+end
+
+def exit_program
+  puts "Exiting pgrogram."
+  exit
+end
+
+welcome_message
+user_email = prompt_user_for_email
+verify_user_email(user_email)
+user_password = prompt_user_for_password
+verify_user_password(user_password)
+while(true)
+  menu_options
+  user_selection = get_user_menu_selection
+  handle_user_menu_selection(user_selection)
 end
